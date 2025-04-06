@@ -1,2 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using P = PudelkoLib;
+
 Console.WriteLine("Hello, World!");
