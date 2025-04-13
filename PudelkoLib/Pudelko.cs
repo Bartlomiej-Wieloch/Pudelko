@@ -78,11 +78,6 @@ namespace PudelkoLib
             return ToString("m", null);
         }
 
-        //public string ToString(string format)
-        //{
-        //    return ToString(format, cInfo);
-        //}
-
         public string ToString(string format, IFormatProvider? provider = null)
         {
             if (String.IsNullOrEmpty(format)) format = "m";
@@ -113,5 +108,8 @@ namespace PudelkoLib
                     throw new FormatException("Błędna jednostka");
             }
         }
+
+        public double Objetosc => Math.Round(A * B * C, 9);
+        public double Pole => Math.Round(2 * (A * B + A * C + B * C), 6);
     }
 }

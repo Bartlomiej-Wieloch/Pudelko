@@ -443,4 +443,36 @@ public class UnitTestsPudelkoConstructors
     }
 
     #endregion
+
+    #region Pole, Objętość ===================================
+
+    [TestMethod, TestCategory("Objętość")]
+    public void Objetosc_Property_RoundsCorrectly_Down()
+    {
+        var p = new Pudelko(0.7777, 0.7777, 0.7777);
+        Assert.AreEqual(p.Objetosc, 0.470366406);
+    }
+
+    [TestMethod, TestCategory("Objętość")]
+    public void Objetosc_Property_RoundsCorrectly_Up()
+    {
+        var p = new Pudelko(0.1111, 0.2221, 0.3331);
+        Assert.AreEqual(p.Objetosc, 0.008219346);
+    }
+
+    [TestMethod, TestCategory("Pole")]
+    public void Pole_Property_RoundsCorrectly_Up()
+    {
+        var p = new Pudelko(0.1111, 0.2222, 0.7777);
+        Assert.AreEqual(p.Pole, 0.567788);
+    }
+
+    [TestMethod, TestCategory("Pole")]
+    public void Pole_Property_RoundsCorrectly_Down()
+    {
+        var p = new Pudelko(0.1111, 0.2222, 0.3331);
+        Assert.AreEqual(p.Pole, 0.271417);
+    }
+
+    #endregion
 }
