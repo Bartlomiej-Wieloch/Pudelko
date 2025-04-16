@@ -7,7 +7,7 @@ using static PudelkoLib.Pudelko.UnitOfMeasure;
 
 namespace PudelkoLib
 {
-    public sealed class Pudelko : IFormattable
+    public sealed class Pudelko : IFormattable, IEquatable<Pudelko>
     {
         CultureInfo cInfo = new CultureInfo("en-US");
 
@@ -26,11 +26,11 @@ namespace PudelkoLib
             if (value <= 0)
                 throw new ArgumentOutOfRangeException("Bok pudełka musi być wartością dodatnią");
 
-            if ((value <= 0.9) && unit == milimeter)
-                throw new ArgumentOutOfRangeException("Bok pudełka musi być większy od 0.9 milimetra");
+            if ((value < 1) && unit == milimeter)
+                throw new ArgumentOutOfRangeException("Bok pudełka nie może być mniejszy od 1 milimetra");
 
-            if ((value <= 0.09) && unit == centimeter)
-                throw new ArgumentOutOfRangeException("Bok pudełka musi być większy od 0.09 centymetra");
+            if ((value < 0.1) && unit == centimeter)
+                throw new ArgumentOutOfRangeException("Bok pudełka nie może być mniejszy od 0.1 centymetra");
 
             switch (unit)
             {
@@ -49,8 +49,9 @@ namespace PudelkoLib
 
         /*
          * taka implementacja jest lepsza niż na sztywno przypisanie wartości warunkowej = 0.1 
-         * Gdy wybierzemy inną jednostkę niż metr i zostawimy pare argumentów pustych, pozostałe wartości
-         * też będą przeliczone (np. 0.1 /100) co nie jest tym co chcemy osiągnąć
+         * Gdy wybierzemy inną jednostkę niż metr i zostawimy pare argumentów pustych, 
+         * pozostałe wartości też będą przeliczone (np. 0.1 /100) 
+         * co nie jest tym co chcemy osiągnąć
          */
         public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = meter)
         {
@@ -109,7 +110,63 @@ namespace PudelkoLib
             }
         }
 
+        public bool Equals(Pudelko other)
+        {
+            if (other is null) return false;
+            if (Object.ReferenceEquals(this, other)) return true;
+
+            if ((_a == other._a && _b == other._b && _c == other._c) ||
+                (_a == other._b && _b == other._a && _c == other._c) ||
+                (_a == other._c && _b == other._a && _c == other._b) ||
+                (_a == other._c && _b == other._b && _c == other._a) ||
+                (_a == other._b && _b == other._c && _c == other._a) ||
+                (_a == other._a && _b == other._c && _c == other._b))
+                return true;
+
+            //if ((_a == other._a && _b == other._b && _c == other._c)) return true;
+            //if ((_a == other._b && _b == other._a && _c == other._c)) return true;
+            //if ((_a == other._c && _b == other._a && _c == other._b)) return true;
+            //if ((_a == other._c && _b == other._b && _c == other._a)) return true;
+            //if ((_a == other._b && _b == other._c && _c == other._a)) return true;
+            //if ((_a == other._a && _b == other._c && _c == other._b)) return true;
+
+            else
+                return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Pudelko)
+                return Equals((Pudelko)obj);
+            else
+                return false;
+        }
+
+        public static bool Equals(Pudelko p1, Pudelko p2)
+        {
+            if ((p1 is null) && (p2 is null)) return true;
+            if (p1 is null) return false;
+
+            return p1.Equals(p2);
+        }
+
+        public override int GetHashCode()
+        {
+            var dimensions = new List<double> {A, B, C};
+            dimensions.Sort();
+
+            HashCode hash = new HashCode();
+            hash.Add(dimensions[0]);
+            hash.Add(dimensions[1]);
+            hash.Add(dimensions[2]);
+            return hash.ToHashCode();
+        }
+
+        public static bool operator == (Pudelko p1, Pudelko p2) => Equals(p1, p2);
+        public static bool operator != (Pudelko p1, Pudelko p2) => !(p1 == p2);
+
         public double Objetosc => Math.Round(A * B * C, 9);
         public double Pole => Math.Round(2 * (A * B + A * C + B * C), 6);
+
     }
 }

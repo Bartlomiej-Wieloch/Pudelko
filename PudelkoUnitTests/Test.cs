@@ -1,5 +1,7 @@
 ﻿using PudelkoLib;
 using System.Globalization;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using static PudelkoLib.Pudelko;
 
 namespace PudelkoUnitTests;
@@ -475,4 +477,180 @@ public class UnitTestsPudelkoConstructors
     }
 
     #endregion
+
+
+    #region Equals ===========================================
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_OtherIsNull_False()
+    {
+        var p = new Pudelko();
+        bool condition = p.Equals(null);
+
+        Assert.IsFalse(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_OtherIsTheSameObject_True()
+    {
+        var p = new Pudelko();
+        bool condition = p.Equals(p);
+
+        Assert.IsTrue(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_PudelkoesHaveTheSameDimensions_True()
+    {
+        var p = new Pudelko();
+        var p2 = new Pudelko();
+
+        bool condition = p.Equals(p2);
+        Assert.IsTrue(condition);
+    }
+
+    [DataTestMethod, TestCategory("Equals")]
+    [DataRow(1.0, 2.543, 3.1)]
+    [DataRow(1.0, 3.1, 2.543)]
+    [DataRow(2.543, 1.0, 3.1)]
+    [DataRow(2.543, 3.1, 1.0)]
+    [DataRow(3.1, 1.0, 2.543)]
+    [DataRow(3.1, 2.543, 1.0)]
+    public void Equals_BoxesHaveTheSameDimensionsButAreRotated_True(double a, double b, double c)
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+        var p2 = new Pudelko(a, b, c);
+
+        bool condition = p.Equals(p2);
+
+        Assert.IsTrue(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_BoxesDontHaveTheSameDimensions_False()
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+        var p2 = new Pudelko(1.0, 2.543, 3);
+
+        bool condition = p.Equals(p2);
+
+        Assert.IsFalse(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_StaticMethodTwoBoxes_False()
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+        var p2 = new Pudelko(1.0, 2.543, 3);
+
+        bool condition = Pudelko.Equals(p, p2);
+
+        Assert.IsFalse(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_BothObjectsAreNull_True()
+    {
+        //var p = new Pudelko(null);
+        //var p2 = new Pudelko(null);
+
+        bool condition = Pudelko.Equals(null, null);
+        //bool condition = Pudelko.Equals(p, p2);
+
+        Assert.IsTrue(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_OneObjectIsNull_False()
+    {
+        var p = new Pudelko(1, 2, 3, UnitOfMeasure.centimeter);
+
+        bool condition = Pudelko.Equals(null, p);
+
+        Assert.IsFalse(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_OneObjectIsBox_True()
+    {
+        var p = new Pudelko(1, 2, 3);
+        object p2 = new Pudelko(1, 2, 3);
+
+        bool condition = p.Equals(p2);
+
+        Assert.IsTrue(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_OneObjectIsBox_False()
+    {
+        var p = new Pudelko(1, 2, 3);
+        object p2 = new Pudelko(1, 3, 3);
+
+        bool condition = p.Equals(p2);
+
+        Assert.IsFalse(condition);
+    }
+
+    [TestMethod, TestCategory("Equals")]
+    public void Equals_OneObjectIsNotBox_False()
+    {
+        var p = new Pudelko(1, 2, 3);
+        object p2 = new string ("Im not a box!");
+
+        bool condition = p.Equals(p2);
+
+        Assert.IsFalse(condition);
+    }
+
+    #endregion
+
+    #region GetHashCode ===========================
+
+    [TestMethod, TestCategory("GetHashCode")]
+    public void GetHashCode_RotatedBox_True()
+    {
+        var p = new Pudelko(1, 2, 3);
+        var p2 = new Pudelko(2, 3, 1);
+
+        Assert.AreEqual(p.GetHashCode(), p2.GetHashCode());
+    }
+
+    [TestMethod, TestCategory("GetHashCode")]
+    public void GetHashCode_DifferentBox_False()
+    {
+        var p = new Pudelko(1, 2, 3);
+        var p2 = new Pudelko(1, 3, 1);
+
+        Assert.AreNotEqual(p.GetHashCode(), p2.GetHashCode());
+    }
+
+    #endregion
+
+    #region Operators overloading ===========================
+
+    [TestMethod, TestCategory("Operators")]
+    public void Operators_Equals_True()
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+        var p2 = new Pudelko(1.0, 2.543, 3.1);
+
+        bool condition = Pudelko.Equals(p, p2);
+
+        Assert.IsTrue(p==p2);
+    }
+
+    [TestMethod, TestCategory("Operators")]
+    public void Operators_Equals_False()
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+        var p2 = new Pudelko(1.0, 2.543, 3);
+
+        bool condition = Pudelko.Equals(p, p2);
+
+        Assert.IsTrue(p != p2);
+    }
+
+    #endregion
+
 }
