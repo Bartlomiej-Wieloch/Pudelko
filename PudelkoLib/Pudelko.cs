@@ -152,7 +152,7 @@ namespace PudelkoLib
 
         public override int GetHashCode()
         {
-            var dimensions = new List<double> {A, B, C};
+            var dimensions = new List<double> { A, B, C };
             dimensions.Sort();
 
             HashCode hash = new HashCode();
@@ -162,11 +162,26 @@ namespace PudelkoLib
             return hash.ToHashCode();
         }
 
-        public static bool operator == (Pudelko p1, Pudelko p2) => Equals(p1, p2);
-        public static bool operator != (Pudelko p1, Pudelko p2) => !(p1 == p2);
+        public static bool operator ==(Pudelko p1, Pudelko p2) => Equals(p1, p2);
+        public static bool operator !=(Pudelko p1, Pudelko p2) => !(p1 == p2);
 
         public double Objetosc => Math.Round(A * B * C, 9);
         public double Pole => Math.Round(2 * (A * B + A * C + B * C), 6);
 
+        //public static bool operator + (Pudelko p1, Pudelko p2)
+        //{
+
+        //}
+
+        public static explicit operator double[](Pudelko p)
+            => new double[] { p.A, p.B, p.C };
+
+        public static implicit operator Pudelko(ValueTuple<int, int, int> valueTuple)
+        {
+            int aV = valueTuple.Item1;
+            int bV = valueTuple.Item2;
+            int cV = valueTuple.Item3;
+            return new Pudelko(aV, bV, cV, milimeter);
+        }
     }
 }

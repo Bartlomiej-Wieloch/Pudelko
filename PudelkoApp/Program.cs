@@ -21,3 +21,18 @@ Console.WriteLine();
 Console.WriteLine("Czy p1 = p2 ?");
 Console.WriteLine(p1==p2);
 
+Console.WriteLine("\nUtwórz nową tablicę z pudełka p1");
+
+double[] tablica = ((double[])p2);
+
+foreach (var item in tablica)
+{
+    Console.WriteLine(item);
+}
+
+Console.WriteLine("\nUtwórz nowe pudełko p3 z krotki ValueTuple<int,int,int>. Wymiary domyślnie w milimetrach");
+var ValueTuple = (10, 10, 10);
+Pudelko p3 = ValueTuple;
+Console.WriteLine($"p3 = {p3.ToString()}\n");
+
+
