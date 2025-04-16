@@ -710,58 +710,6 @@ public class UnitTestsPudelkoConstructors
         Assert.AreEqual(resultC, actual.C);
     }
 
-    //[TestMethod, TestCategory("Operators")]
-    //public void Operators_AddingTwoDifferentBoxes2_ReturnsCorrectDimensions()
-    //{
-    //    var p1 = new Pudelko(1, 2, 3);
-    //    var p2 = new Pudelko(4, 1, 2);
-
-    //    var actual = p1 + p2;
-
-    //    Assert.AreEqual(5.0, actual.A);
-    //    Assert.AreEqual(2.0, actual.B);
-    //    Assert.AreEqual(3.0, actual.C);
-    //}
-
-    //[TestMethod, TestCategory("Operators")]
-    //public void Operators_AddingTwoDifferentBoxes3_ReturnsCorrectDimensions()
-    //{
-    //    var p1 = new Pudelko(1, 8, 1);
-    //    var p2 = new Pudelko(1, 1, 1);
-
-    //    var actual = p1 + p2;
-
-    //    Assert.AreEqual(1.0, actual.A);
-    //    Assert.AreEqual(9.0, actual.B);
-    //    Assert.AreEqual(1.0, actual.C);
-    //}
-
-    //[TestMethod, TestCategory("Operators")]
-    //public void Operators_AddingTwoDifferentBoxes4_ReturnsCorrectDimensions()
-    //{
-    //    var p1 = new Pudelko(5, 5, 7);
-    //    var p2 = new Pudelko(1, 1, 1);
-
-    //    var actual = p1 + p2;
-
-    //    Assert.AreEqual(5.0, actual.A);
-    //    Assert.AreEqual(5.0, actual.B);
-    //    Assert.AreEqual(8.0, actual.C);
-    //}
-
-    //[TestMethod, TestCategory("Operators")]
-    //public void Operators_AddingTwoDifferentBoxes5_ReturnsCorrectDimensions()
-    //{
-    //    var p1 = new Pudelko(4, 9, 1);
-    //    var p2 = new Pudelko(1, 1, 3);
-
-    //    var actual = p1 + p2;
-
-    //    Assert.AreEqual(4.0, actual.A);
-    //    Assert.AreEqual(10.0, actual.B);
-    //    Assert.AreEqual(3.0, actual.C);
-    //}
-
     [TestMethod, TestCategory("Operators")]
     public void Operators_AddingTwoDifferentCubesInDifferentOrder_ReturnsCorrectDimensions()
     {
@@ -773,8 +721,6 @@ public class UnitTestsPudelkoConstructors
 
         Assert.AreEqual(actual, actual2);
     }
-
-
 
     #endregion
 
