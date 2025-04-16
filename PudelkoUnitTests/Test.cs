@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using static PudelkoLib.Pudelko;
+//using static PudelkoLib.Pudelko.UnitOfMeasure;
 
 namespace PudelkoUnitTests;
 
@@ -654,7 +655,7 @@ public class UnitTestsPudelkoConstructors
     #endregion
 
     #region Conversions =====================================
-    [TestMethod]
+    [TestMethod, TestCategory("Conversions")]
     public void ExplicitConversion_ToDoubleArray_AsMeters()
     {
         var p = new Pudelko(1, 2.1, 3.231);
@@ -665,7 +666,7 @@ public class UnitTestsPudelkoConstructors
         Assert.AreEqual(p.C, tab[2]);
     }
 
-    [TestMethod]
+    [TestMethod, TestCategory("Conversions")]
     public void ImplicitConversion_FromAalueTuple_As_Pudelko_InMilimeters()
     {
         var (a, b, c) = (2500, 9321, 100); // in milimeters, ValueTuple
@@ -673,6 +674,107 @@ public class UnitTestsPudelkoConstructors
         Assert.AreEqual((int)(p.A * 1000), a);
         Assert.AreEqual((int)(p.B * 1000), b);
         Assert.AreEqual((int)(p.C * 1000), c);
+    }
+
+    #endregion
+
+    #region Parsing =========================================
+
+    [TestMethod, TestCategory("Parsing")]
+    public void Parsing_FromStringToBox_ImplicitMeters()
+    {
+        string s = new string("2.500 m × 9.321 m × 0.100 m");
+
+        var p = new Pudelko(2.500, 9.321, 0.100);
+        var p2 = Pudelko.Parse(s);
+
+        Assert.AreEqual(p.A, p2.A);
+        Assert.AreEqual(p.B, p2.B);
+        Assert.AreEqual(p.C, p2.C);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    public void Parsing_FromStringToBox_ExplicitMeters()
+    {
+        string s = new string("2.500 m × 9.321 m × 0.100 m");
+
+        var p = new Pudelko(2.500, 9.321, 0.100, UnitOfMeasure.meter);
+        var p2 = Pudelko.Parse(s);
+
+        Assert.AreEqual(p.A, p2.A);
+        Assert.AreEqual(p.B, p2.B);
+        Assert.AreEqual(p.C, p2.C);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    public void Parsing_FromStringToBox_Centimeters()
+    {
+        string s = new string("2.500 cm × 9.321 cm × 0.100 cm");
+
+        var p = new Pudelko(2.500, 9.321, 0.100, UnitOfMeasure.centimeter);
+        var p2 = Pudelko.Parse(s);
+
+        Assert.AreEqual(p.A, p2.A);
+        Assert.AreEqual(p.B, p2.B);
+        Assert.AreEqual(p.C, p2.C);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    public void Parsing_FromStringToBox_Milimeter()
+    {
+        string s = new string("2500 mm × 9321 mm × 100 mm");
+
+        var p = new Pudelko(2500, 9321, 100, UnitOfMeasure.milimeter);
+        var p2 = Pudelko.Parse(s);
+
+        Assert.AreEqual(p.A, p2.A);
+        Assert.AreEqual(p.B, p2.B);
+        Assert.AreEqual(p.C, p2.C);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    [ExpectedException(typeof(ArgumentException))]
+    public void Parsing_FromStringToBoxEmptyString_Exception()
+    {
+        string s = new string(" ");
+
+        var p = Pudelko.Parse(s);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    [ExpectedException(typeof(FormatException))]
+    public void Parsing_FromStringToBoxWrongFormat_Exception()
+    {
+        string s = new string("2500 mm × 9321 mm");
+
+        var p = Pudelko.Parse(s);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    [ExpectedException(typeof(FormatException))]
+    public void Parsing_FromStringToBoxWrongFormat2_Exception()
+    {
+        string s = new string("2500 mm × 9321 mm × 100mm");
+
+        var p = Pudelko.Parse(s);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    [ExpectedException(typeof(FormatException))]
+    public void Parsing_FromStringToBoxWrongFormat3_Exception()
+    {
+        string s = new string("2500 mm × 9ll1 mm × 100mm");
+
+        var p = Pudelko.Parse(s);
+    }
+
+    [TestMethod, TestCategory("Parsing")]
+    [ExpectedException(typeof(FormatException))]
+    public void Parsing_FromStringToBoxWrongFormat4_Exception()
+    {
+        string s = new string("2500 dm × 9001 dm × 100 dm");
+
+        var p = Pudelko.Parse(s);
     }
 
     #endregion

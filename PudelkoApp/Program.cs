@@ -1,5 +1,6 @@
 ﻿using PudelkoLib;
 using System.Globalization;
+using System.Net.WebSockets;
 
 
 var p1 = new Pudelko(2.5, 9.321, 0.1);
@@ -34,5 +35,12 @@ Console.WriteLine("\nUtwórz nowe pudełko p3 z krotki ValueTuple<int,int,int>. 
 var ValueTuple = (10, 10, 10);
 Pudelko p3 = ValueTuple;
 Console.WriteLine($"p3 = {p3.ToString()}\n");
+
+Console.WriteLine("Utwórz nowe pudełko p4 z stringa w formacie \"«liczba» «jednostka» × «liczba» «jednostka» × «liczba» «jednostka»\"");
+string s = new string("2500 mm × 9321 mm × 100 mm");
+Console.WriteLine($"string s = {s}");
+
+Pudelko p4 = Pudelko.Parse(s);
+Console.WriteLine($"p4 = {p4.ToString()}\n");
 
 

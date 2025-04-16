@@ -183,5 +183,61 @@ namespace PudelkoLib
             int cV = valueTuple.Item3;
             return new Pudelko(aV, bV, cV, milimeter);
         }
+
+        public static Pudelko Parse(string input)
+        {
+            //P.Parse("2.500 m × 9.321 m × 0.100 m")
+            if (string.IsNullOrWhiteSpace(input))
+                throw new ArgumentException("Input nie może być pusty");
+
+            string[] parts = input.Split(new string[] { " × " }, StringSplitOptions.TrimEntries);
+            if(parts.Length != 3)
+                throw new FormatException("Nie poprawny format. " +
+                    "Spodziewano się «liczba» «jednostka» × «liczba» «jednostka» × «liczba» «jednostka»");
+
+            UnitOfMeasure? determinedUnit = null;
+            double[] dimensions = new double[3];
+            for (int i = 0; i < parts.Length; i++)
+            {
+                int spaceIndex = parts[i].LastIndexOf(' ');
+
+                if (spaceIndex < 0 || spaceIndex == parts[i].Length - 1)
+                    throw new FormatException("Nie poprawny format. " +
+                        "Spodziewano się «liczba» «jednostka» × «liczba» «jednostka» × «liczba» «jednostka»");
+
+                string number = parts[i].Substring(0, spaceIndex);
+                string unit = parts[i].Substring(spaceIndex + 1);
+
+                if (double.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out double result))
+                {
+                    dimensions[i] = result;
+                }
+                else
+                {
+                    throw new FormatException("Błąd parsowania liczby ze stringa");
+                }
+                if (determinedUnit == null) 
+                {
+                    if (unit.Equals("m", StringComparison.OrdinalIgnoreCase))
+                    {
+                        determinedUnit = UnitOfMeasure.meter;
+                    }
+                    else if (unit.Equals("cm", StringComparison.OrdinalIgnoreCase))
+                    {
+                        determinedUnit = UnitOfMeasure.centimeter;
+                    }
+                    else if (unit.Equals("mm", StringComparison.OrdinalIgnoreCase))
+                    {
+                        determinedUnit = UnitOfMeasure.milimeter;
+                    }
+                    else
+                    {
+
+                        throw new FormatException($"Nieznana jednostka '{unit}'.");
+                    }
+                }
+            }
+            return new Pudelko(dimensions[0], dimensions[1], dimensions[2], determinedUnit.Value);
+        }
     }
 }
