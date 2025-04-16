@@ -168,10 +168,42 @@ namespace PudelkoLib
         public double Objetosc => Math.Round(A * B * C, 9);
         public double Pole => Math.Round(2 * (A * B + A * C + B * C), 6);
 
-        //public static bool operator + (Pudelko p1, Pudelko p2)
-        //{
+        public static Pudelko operator +(Pudelko p1, Pudelko p2)
+        {
+            if (p1 is null || p2 is null)
+                throw new ArgumentNullException("Nie można dodać pustego pudełka");
 
-        //}
+            double a1 = p1.A, b1 = p1.B, c1 = p1.C;
+            double a2 = p2.A, b2 = p2.B, c2 = p2.C;
+
+            double box1_A = a1 + a2;
+            double box1_B = Math.Max(b1, b2);
+            double box1_C = Math.Max(c1, c2);
+            double vol1 = box1_A * box1_B * box1_C;
+
+            double box2_A = Math.Max(a1, a2);
+            double box2_B = b1 + b2;
+            double box2_C = Math.Max(c1, c2);
+            double vol2 = box2_A * box2_B * box2_C;
+
+            double box3_A = Math.Max(a1, a2);
+            double box3_B = Math.Max(b1, b2);
+            double box3_C = c1 + c2;
+            double vol3 = box3_A * box3_B * box3_C;
+
+            if (vol1 <= vol2 && vol1 <= vol3)
+            {
+                return new Pudelko(box1_A, box1_B, box1_C);
+            }
+            else if (vol2 <= vol1 && vol2 <= vol3)
+            {
+                return new Pudelko(box2_A, box2_B, box2_C);
+            }
+            else
+            {
+                return new Pudelko(box3_A, box3_B, box3_C);
+            }
+        }
 
         public static explicit operator double[](Pudelko p)
             => new double[] { p.A, p.B, p.C };
@@ -239,5 +271,6 @@ namespace PudelkoLib
             }
             return new Pudelko(dimensions[0], dimensions[1], dimensions[2], determinedUnit.Value);
         }
+
     }
 }

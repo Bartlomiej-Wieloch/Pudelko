@@ -652,6 +652,130 @@ public class UnitTestsPudelkoConstructors
         Assert.IsTrue(p != p2);
     }
 
+    [TestMethod, TestCategory("Operators")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Operators_AddingNullBox_Excepiton()
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+
+        var actual = p + null;
+    }
+
+    [TestMethod, TestCategory("Operators")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Operators_AddingNullBox2_Excepiton()
+    {
+        var p = new Pudelko(1.0, 2.543, 3.1);
+
+        var actual = null + p;
+    }
+
+    [TestMethod, TestCategory("Operators")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Operators_AddingNullBox3_Excepiton()
+    {
+        Pudelko p = null;
+
+        var actual = null + p;
+    }
+
+    [TestMethod, TestCategory("Operators")]
+    public void Operators_AddingTwoIdenticalCubes_ReturnsCorrectDimensions()
+    {
+        var p1 = new Pudelko(1, 1, 1);
+        var p2 = new Pudelko(1, 1, 1);
+
+        var actual = p1 + p2;
+
+        Assert.AreEqual(2.0, actual.A);
+        Assert.AreEqual(1.0, actual.B);
+        Assert.AreEqual(1.0, actual.C);
+    }
+
+    [DataTestMethod, TestCategory("Operators")]
+    [DataRow(1, 1, 1, 1, 1, 8, 1.0, 1.0, 9.0)]
+    [DataRow(1, 2, 3, 4, 1, 2, 5.0, 2.0, 3.0)]
+    [DataRow(1, 8, 1, 1, 1, 1, 1.0, 9.0, 1.0)]
+    [DataRow(5, 5, 7, 1, 1, 1, 5.0, 5.0, 8.0)]
+    [DataRow(4, 9, 1, 1, 1, 3, 4.0, 10.0, 3.0)]
+    public void Operators_AddingTwoDifferentBoxes_ReturnsCorrectDimensions(double a1, double b1, double c1, double a2, double b2, double c2, double resultA, double resultB, double resultC)
+    {
+        var p1 = new Pudelko(a1, b1, c1);
+        var p2 = new Pudelko(a2, b2, c2);
+
+        var actual = p1 + p2;
+
+        Assert.AreEqual(resultA, actual.A);
+        Assert.AreEqual(resultB, actual.B);
+        Assert.AreEqual(resultC, actual.C);
+    }
+
+    //[TestMethod, TestCategory("Operators")]
+    //public void Operators_AddingTwoDifferentBoxes2_ReturnsCorrectDimensions()
+    //{
+    //    var p1 = new Pudelko(1, 2, 3);
+    //    var p2 = new Pudelko(4, 1, 2);
+
+    //    var actual = p1 + p2;
+
+    //    Assert.AreEqual(5.0, actual.A);
+    //    Assert.AreEqual(2.0, actual.B);
+    //    Assert.AreEqual(3.0, actual.C);
+    //}
+
+    //[TestMethod, TestCategory("Operators")]
+    //public void Operators_AddingTwoDifferentBoxes3_ReturnsCorrectDimensions()
+    //{
+    //    var p1 = new Pudelko(1, 8, 1);
+    //    var p2 = new Pudelko(1, 1, 1);
+
+    //    var actual = p1 + p2;
+
+    //    Assert.AreEqual(1.0, actual.A);
+    //    Assert.AreEqual(9.0, actual.B);
+    //    Assert.AreEqual(1.0, actual.C);
+    //}
+
+    //[TestMethod, TestCategory("Operators")]
+    //public void Operators_AddingTwoDifferentBoxes4_ReturnsCorrectDimensions()
+    //{
+    //    var p1 = new Pudelko(5, 5, 7);
+    //    var p2 = new Pudelko(1, 1, 1);
+
+    //    var actual = p1 + p2;
+
+    //    Assert.AreEqual(5.0, actual.A);
+    //    Assert.AreEqual(5.0, actual.B);
+    //    Assert.AreEqual(8.0, actual.C);
+    //}
+
+    //[TestMethod, TestCategory("Operators")]
+    //public void Operators_AddingTwoDifferentBoxes5_ReturnsCorrectDimensions()
+    //{
+    //    var p1 = new Pudelko(4, 9, 1);
+    //    var p2 = new Pudelko(1, 1, 3);
+
+    //    var actual = p1 + p2;
+
+    //    Assert.AreEqual(4.0, actual.A);
+    //    Assert.AreEqual(10.0, actual.B);
+    //    Assert.AreEqual(3.0, actual.C);
+    //}
+
+    [TestMethod, TestCategory("Operators")]
+    public void Operators_AddingTwoDifferentCubesInDifferentOrder_ReturnsCorrectDimensions()
+    {
+        var p1 = new Pudelko(1, 2, 3);
+        var p2 = new Pudelko(4, 1, 2);
+
+        var actual = p1 + p2;
+        var actual2 = p2 + p1;
+
+        Assert.AreEqual(actual, actual2);
+    }
+
+
+
     #endregion
 
     #region Conversions =====================================
@@ -675,6 +799,8 @@ public class UnitTestsPudelkoConstructors
         Assert.AreEqual((int)(p.B * 1000), b);
         Assert.AreEqual((int)(p.C * 1000), c);
     }
+
+
 
     #endregion
 

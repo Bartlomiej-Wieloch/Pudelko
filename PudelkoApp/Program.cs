@@ -43,4 +43,13 @@ Console.WriteLine($"string s = {s}");
 Pudelko p4 = Pudelko.Parse(s);
 Console.WriteLine($"p4 = {p4.ToString()}\n");
 
+Console.WriteLine("Utwórz nowe pudełko które zmieści dwa inne, będąc przy tym możliwie najmniejsze");
+var p5 = new Pudelko(1, 2, 1);
+var p6 = new Pudelko(1, 1, 3);
 
+Console.WriteLine($"Pudełko p5 = {p5.ToString()}");
+Console.WriteLine($"Pudełko p6 = {p6.ToString()}");
+
+Pudelko p56 = p5 + p6;
+
+Console.WriteLine($"Najmniejsze pudełko mieszczące oba = {p56.ToString()}\n");
