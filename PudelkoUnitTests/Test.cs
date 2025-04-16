@@ -479,7 +479,6 @@ public class UnitTestsPudelkoConstructors
 
     #endregion
 
-
     #region Equals ===========================================
 
     [TestMethod, TestCategory("Equals")]
@@ -552,11 +551,8 @@ public class UnitTestsPudelkoConstructors
     [TestMethod, TestCategory("Equals")]
     public void Equals_BothObjectsAreNull_True()
     {
-        //var p = new Pudelko(null);
-        //var p2 = new Pudelko(null);
 
         bool condition = Pudelko.Equals(null, null);
-        //bool condition = Pudelko.Equals(p, p2);
 
         Assert.IsTrue(condition);
     }
