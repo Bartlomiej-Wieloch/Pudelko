@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using static PudelkoLib.Pudelko;
-//using static PudelkoLib.Pudelko.UnitOfMeasure;
+using PudelkoApp;
 
 namespace PudelkoUnitTests;
 
@@ -602,7 +602,7 @@ public class UnitTestsPudelkoConstructors
 
     #endregion
 
-    #region GetHashCode ===========================
+    #region GetHashCode =====================================
 
     [TestMethod, TestCategory("GetHashCode")]
     public void GetHashCode_RotatedBox_True()
@@ -895,4 +895,38 @@ public class UnitTestsPudelkoConstructors
     }
     #endregion
 
+    #region Extensions ======================================
+
+    [TestMethod, TestCategory("Extensions")]
+    public void Extensions_Kompresuj_True()
+    {
+        var p = new Pudelko(1.0, 3.0, 3.0);
+
+        Pudelko compressed = p.Kompresuj();
+
+        Assert.AreEqual(p.Objetosc, compressed.Objetosc);
+    }
+
+    [TestMethod, TestCategory("Extensions")]
+    public void Extensions_Kompresuj2_True()
+    {
+        var p = new Pudelko(1.0, 2.0, 4.0);
+
+        Pudelko compressed = p.Kompresuj();
+
+        Assert.AreEqual(2.0, compressed.A);
+        Assert.AreEqual(2.0, compressed.B);
+        Assert.AreEqual(2.0, compressed.C);
+    }
+
+    [TestMethod, TestCategory("Extensions")]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Extensions_Kompresuj_Exception()
+    {
+        Pudelko p = null;
+
+        p.Kompresuj();
+    }
+
+    #endregion
 }

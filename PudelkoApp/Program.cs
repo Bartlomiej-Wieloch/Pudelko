@@ -1,6 +1,7 @@
 ﻿using PudelkoLib;
 using System.Globalization;
 using System.Net.WebSockets;
+using static PudelkoApp.Extensions;
 
 
 var p1 = new Pudelko(2.5, 9.321, 0.1);
@@ -60,5 +61,13 @@ Console.WriteLine($"Wymiar o indeksie 2 = {p56[2]:F3} m\n");
 Console.WriteLine("Wymiary pudełka p56 za pomocą pętli foreach:");
 foreach (var dimension in p56)
 {
-    Console.WriteLine($"- {dimension:F3} m");
+    Console.WriteLine($"- {dimension:F3} m\n");
 }
+
+Console.WriteLine("Metoda Kompresuj() pozwala na skompresowania pudełka aby stał się sześcianem o takiej samej objętośći");
+Pudelko p7 = new Pudelko(1.0, 3.0, 3.0);
+Console.WriteLine($"p7 = {p7.ToString()}");
+Console.WriteLine($"objetosc p7 = {p7.Objetosc}");
+Pudelko p8 = p7.Kompresuj();
+Console.WriteLine($"p8 = {p8.ToString()}");
+Console.WriteLine($"objetosc p8 = {p8.Objetosc}");

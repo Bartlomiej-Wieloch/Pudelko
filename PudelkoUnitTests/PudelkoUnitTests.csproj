@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PudelkoApp\PudelkoApp.csproj" />
     <ProjectReference Include="..\PudelkoLib\PudelkoLib.csproj" />
   </ItemGroup>
 
