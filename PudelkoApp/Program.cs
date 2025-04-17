@@ -114,20 +114,20 @@ internal class Program
 
 
         Console.WriteLine("Przed sortowaniem :\n");
-        Console.WriteLine($"| {"Pudełko",-27} {"| Objętość",-16} {"| Pole całkowite",-21} {"| Suma wymiarów",-14}");
+        Console.WriteLine($"| {"Pudełko",-27} {"| Objętość [m^3]",-16} {"| Pole całkowite [m^2]",-21} {"| Suma wymiarów [m]",-14}");
         foreach (var p in pudelka)
         {
-            Console.WriteLine($"| {p,-20} | {p.Objetosc,-15}| {p.Pole,-20}| {p.A + p.B + p.C,-15}");
+            Console.WriteLine($"| {p,-20} | {p.Objetosc,-15}| {p.Pole,-20} | {p.A + p.B + p.C,-15}");
         }
         Console.WriteLine("\nPo sortowaniu :\n");
 
         Comparison<Pudelko> comparisonDelegate = ComparePudelka;
         pudelka.Sort(comparisonDelegate);
 
-        Console.WriteLine($"| {"Pudełko",-27} {"| Objętość",-16} {"| Pole całkowite",-21} {"| Suma wymiarów",-14}");
+        Console.WriteLine($"| {"Pudełko",-27} {"| Objętość [m^3]",-16} {"| Pole całkowite [m^2]",-21} {"| Suma wymiarów [m]",-14}");
         foreach (var p in pudelka)
         {
-            Console.WriteLine($"| {p,-20} | {p.Objetosc,-15}| {p.Pole,-20}| {p.A + p.B + p.C,-15}");
+            Console.WriteLine($"| {p,-20} | {p.Objetosc,-15}| {p.Pole,-20} | {p.A + p.B + p.C,-15}");
         }
     }
 }
