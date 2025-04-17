@@ -11,7 +11,7 @@ namespace PudelkoLib
 {
     public sealed class Pudelko : IFormattable, IEquatable<Pudelko>, IEnumerable<double>
     {
-        CultureInfo cInfo = new CultureInfo("en-US");
+        private static readonly CultureInfo cInfo = new CultureInfo("en-US");
 
         private readonly double _a, _b, _c;
         private readonly UnitOfMeasure _unit;
