@@ -53,3 +53,12 @@ Console.WriteLine($"Pudełko p6 = {p6.ToString()}");
 Pudelko p56 = p5 + p6;
 
 Console.WriteLine($"Najmniejsze pudełko mieszczące oba = {p56.ToString()}\n");
+
+Console.WriteLine("Za pomocą indeksera możemy dostać się do dowolnego wymiaru pudełka p56 (w metrach)");
+Console.WriteLine($"Wymiar o indeksie 2 = {p56[2]:F3} m\n");
+
+Console.WriteLine("Wymiary pudełka p56 za pomocą pętli foreach:");
+foreach (var dimension in p56)
+{
+    Console.WriteLine($"- {dimension:F3} m");
+}

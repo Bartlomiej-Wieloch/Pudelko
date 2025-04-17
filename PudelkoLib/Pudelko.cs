@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Threading;
@@ -7,7 +9,7 @@ using static PudelkoLib.Pudelko.UnitOfMeasure;
 
 namespace PudelkoLib
 {
-    public sealed class Pudelko : IFormattable, IEquatable<Pudelko>
+    public sealed class Pudelko : IFormattable, IEquatable<Pudelko>, IEnumerable<double>
     {
         CultureInfo cInfo = new CultureInfo("en-US");
 
@@ -272,5 +274,29 @@ namespace PudelkoLib
             return new Pudelko(dimensions[0], dimensions[1], dimensions[2], determinedUnit.Value);
         }
 
+        public double this[int index]
+        {
+            get
+            {
+                return index switch
+                {
+                    0 => A,
+                    1 => B,
+                    2 => C,
+                    _ => throw new IndexOutOfRangeException()
+                };
+            }
+
+        }
+
+        public IEnumerator<double> GetEnumerator()
+        {
+            yield return A;
+            yield return B;
+            yield return C;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }
